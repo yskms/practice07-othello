@@ -7,7 +7,7 @@ class Board {
       [ 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 0, 0, 0, 1, 2, 0, 0, 0 ],
       [ 0, 0, 0, 2, 2, 0, 0, 0 ],
-      [ 0, 0, 0, 0, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 2, 0, 0, 0 ],
       [ 0, 0, 0, 0, 2, 0, 0, 0 ],
       [ 0, 0, 0, 0, 1, 0, 0, 0 ],
     ];
@@ -35,79 +35,53 @@ class Board {
     console.log(`index ${index}, x: ${x}, y: ${y}`);  //クリック座標
 
     // 8line down
-    if(this.board[y+1][x] == 0 || this.board[y+1][x] == this.turn) { 
-      //1つ下が0,自色なら,何もしないでいい
-      console.log('down置けない');
-    }else{  //他色の場合、置けるか判定したい
-      for(let i=1; y+i<8; i++) {
-        if(this.board[y+i][x] == this.turn) {
-          down.push(this.turn);
-        } else if(this.board[y+i][x] !== this.turn) {
-          down.push(5);
-        } else {
-          down.push(0);
-        }
+    for(let i=1; y+i<8; i++) {
+      if(this.board[y+i][x] == 1) {
+        // console.log(`1がある x: ${x}, y: ${y+i}`);
+        down.push(1);
+        // console.log(down);
+      } else if(this.board[y+i][x] == 2) {
+        // console.log(`2がある x: ${x}, y: ${y+i}`);
+        down.push(2);
+        // console.log(down);
+      } else {
+        // console.log(`0がある x: ${x}, y: ${y+i}`);
+        down.push(0);
+        // console.log(down);
       }
-      console.log(`down:[${down}]`);
-      if(down.some(s => s==this.turn)){ //置ける場合！
-        console.log('置ける');
-        for(let i=1; y+i<8; i++) {
-          if(this.board[y+i][x] !== this.turn) {  //他色なら
-            this.board[y+i][x] = this.turn;       //自色にする
-            this.displayBoard(x,y+i);             //描写する
-          } else  {
-            break;
-          }
-        }
-      }else console.log('置けない');
     }
-    console.log(this.board);
-  
+    console.log(`down:[${down}]`);
 
     //////////そもそも配列の配列にしたらええんじゃね？？？
   // function test(down)  {
-  //   if(down[0]==0 ||down[0]==this.turn){  //down配列の最初が1か0なら置けない
-  //     console.log('置けない');
-  //   }else{                                //2の場合で
-  //         for(let i=0; i < down.length; i++){
-  //           if(down[i]==0 || down[i]==this.turn){  ////0か1があれば
-  //             console.log('返さない');
-  //           }else{
-  //             down[i]=this.turn;          //2なら1にする
-  //           }
-  //         }
-  //       }
-  // console.log(`down2:[${down}]`);
+    if(down[0]==0 ||down[0]==this.turn){  //down配列の最初が1か0なら置けない
+      console.log('置けない');
+    }else{                                //2の場合で
+          for(let i=0; i < down.length; i++){
+            if(down[i]==0 || down[i]==this.turn){  ////0か1があれば
+              console.log('返さない');
+            }else{
+              down[i]=this.turn;          //2なら1にする
+            }
+          }
+        }
+  console.log(`down2:[${down}]`);
 
 
     // 8line up
-    if(this.board[y-1][x] == 0 || this.board[y-1][x] == this.turn) { 
-      //1つ上が0,自色なら,何もしないでいい
-      console.log('up置けない');
-    }else{  //他色の場合、置けるか判定したい
-      for(let i=1; y-i>=0; i++) {
-        if(this.board[y-i][x] == this.turn) {
-          up.push(this.turn);
-        } else if(this.board[y-i][x] !== this.turn) {
-          up.push(5);
-        } else {
-          up.push(0);
-        }
+    for(let i=1; y-i>=0; i++) {
+      if(this.board[y-i][x] == 1) {
+        // console.log(`1がある x: ${x}, y: ${y-i}`);
+        up.push(1);
+      } else if(this.board[y-i][x] == 2) {
+        // console.log(`2がある x: ${x}, y: ${y-i}`);
+        up.push(2);
+      } else {
+        // console.log(`0がある x: ${x}, y: ${y-i}`);
+        up.push(0);
       }
-      console.log(`up:[${up}]`);
-      if(up.some(s => s==this.turn)){ //置ける場合！
-        console.log('置ける');
-        for(let i=1; y-i>=0; i++) {
-          if(this.board[y-i][x] !== this.turn) {  //他色なら
-            this.board[y-i][x] = this.turn;       //自色にする
-            this.displayBoard(x,y-i);             //描写する
-          } else  {
-            break;
-          }
-        }
-      }else console.log('置けない');
     }
-    console.log(this.board);
+    console.log(`up:[${up}]`);
 
       // 8line right
       for(let i=1; x+i<8; i++) {
