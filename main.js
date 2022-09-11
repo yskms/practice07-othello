@@ -1,3 +1,13 @@
+let down = [];
+let up = [];
+let right = [];
+let left = [];
+let rd = [];
+let ru = [];
+let ld = [];
+let lu = [];
+let okeru = 0;
+
 class Board {
 
   constructor() {
@@ -6,10 +16,10 @@ class Board {
       [ 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 0, 0, 0, 0, 0, 0, 0, 0 ],
       [ 0, 0, 0, 1, 2, 0, 0, 0 ],
-      [ 0, 0, 0, 2, 2, 0, 0, 0 ],
-      [ 0, 0, 0, 0, 1, 0, 0, 0 ],
-      [ 0, 0, 0, 0, 2, 0, 0, 0 ],
-      [ 0, 0, 0, 0, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 2, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0, 0, 0 ],
     ];
     this.turn = 1;
   }
@@ -19,38 +29,54 @@ class Board {
   }
   toggleTurn() {
     this.turn == 1 ? this.turn = 2 : this.turn = 1;
+    // console.log(`次は${this.turn}の番です`);
   }
+
+  // let down = [];
+  // let up = [];
+  // let right = [];
+  // let left = [];
+  // let rd = [];
+  // let ru = [];
+  // let ld = [];
+  // let lu = [];
+  // let okeru = 0;
 
   highLightCanSetBox(index) { //8方向を調べれる
     const x = index % 8;
     const y = Math.floor(index / 8);
-    let down = [];
-    let up = [];
-    let right = [];
-    let left = [];
-    let rd = [];
-    let ru = [];
-    let ld = [];
-    let lu = [];
+    down = [];
+    up = [];
+    right = [];
+    left = [];
+    rd = [];
+    ru = [];
+    ld = [];
+    lu = [];
+    okeru = 0;
     console.log(`index ${index}, x: ${x}, y: ${y}`);  //クリック座標
+    // console.log(`ld:[${ld}]`);
+    // console.log(`lu${lu}`);
 
     // 8line down
-    if(this.board[y+1][x] == 0 || this.board[y+1][x] == this.turn) { 
+    if( y == 7){
+    }else if(this.board[y+1][x] == 0 || this.board[y+1][x] == this.turn) { 
       //1つ下が0,自色なら,何もしないでいい
-      console.log('down置けない');
+      console.log('d置けない1');
     }else{  //他色の場合、置けるか判定したい
-      for(let i=1; y+i<8; i++) {
-        if(this.board[y+i][x] == this.turn) {
+      for(let i=1; y+i<8; i++) { //判定用配列に1,2 or 5 or 0をいれる
+        if(this.board[y+i][x] == 0){
+          break;
+        } else if(this.board[y+i][x] == this.turn) {
           down.push(this.turn);
         } else if(this.board[y+i][x] !== this.turn) {
           down.push(5);
-        } else {
-          down.push(0);
-        }
+        } 
       }
       console.log(`down:[${down}]`);
-      if(down.some(s => s==this.turn)){ //置ける場合！
-        console.log('置ける');
+      if(down.some(s => s==this.turn)){ //1つ下が他色かつ、
+        console.log('d置ける');
+        okeru = 1;    //判定用配列のどこかに自色ありの場合は
         for(let i=1; y+i<8; i++) {
           if(this.board[y+i][x] !== this.turn) {  //他色なら
             this.board[y+i][x] = this.turn;       //自色にする
@@ -59,9 +85,10 @@ class Board {
             break;
           }
         }
-      }else console.log('置けない');
+      }else console.log('d置けない2');
     }
-    console.log(this.board);
+    
+    // console.log(this.board);
   
 
     //////////そもそも配列の配列にしたらええんじゃね？？？
@@ -81,22 +108,24 @@ class Board {
 
 
     // 8line up
-    if(this.board[y-1][x] == 0 || this.board[y-1][x] == this.turn) { 
+    if( y == 0){
+    }else if(this.board[y-1][x] == 0 || this.board[y-1][x] == this.turn) { 
       //1つ上が0,自色なら,何もしないでいい
-      console.log('up置けない');
+      console.log('up置けない1');
     }else{  //他色の場合、置けるか判定したい
       for(let i=1; y-i>=0; i++) {
-        if(this.board[y-i][x] == this.turn) {
+        if(this.board[y-i][x] == 0){
+          break;
+        } else if(this.board[y-i][x] == this.turn) {
           up.push(this.turn);
         } else if(this.board[y-i][x] !== this.turn) {
           up.push(5);
-        } else {
-          up.push(0);
-        }
+        } 
       }
       console.log(`up:[${up}]`);
       if(up.some(s => s==this.turn)){ //置ける場合！
-        console.log('置ける');
+        console.log('up置ける');
+        okeru = 1;
         for(let i=1; y-i>=0; i++) {
           if(this.board[y-i][x] !== this.turn) {  //他色なら
             this.board[y-i][x] = this.turn;       //自色にする
@@ -105,89 +134,240 @@ class Board {
             break;
           }
         }
-      }else console.log('置けない');
+      }else console.log('up置けない2');
     }
-    console.log(this.board);
+    // console.log(this.board);
 
       // 8line right
-      for(let i=1; x+i<8; i++) {
-        if(this.board[y][x+i] == 1) {
-          // console.log(`1がある x: ${x+i}, y: ${y}`);
-          right.push(1);
-        } else if(this.board[y][x+i] == 2) {
-          // console.log(`2がある x: ${x+i}, y: ${y}`);
-          right.push(2);
-        } else {
-          // console.log(`0がある x: ${x+i}, y: ${y}`);
-          right.push(0);
+      if( x == 7){
+      }else if(this.board[y][x+1] == 0 || this.board[y][x+1] == this.turn) { 
+        //1つ右が0,自色なら,何もしないでいい
+        console.log('right置けない1');
+      }else{  //他色の場合、置けるか判定したい
+        for(let i=1; x+i<8; i++) { //判定用配列に1,2 or 5 or 0をいれる
+          if(this.board[y][x+i] == 0){
+            break;
+          }else
+          if(this.board[y][x+i] == this.turn) {
+            right.push(this.turn);
+          } else if(this.board[y][x+i] !== this.turn) {
+            right.push(5);
+          } 
         }
+        console.log(`r:[${right}]`);
+        if(right.some(s => s==this.turn)){ //1つ下が他色かつ、
+          console.log('r置ける');
+          okeru = 1;    //判定用配列のどこかに自色ありの場合は
+          for(let i=1; x+i<8; i++) {
+            if(this.board[y][x+i] !== this.turn) {  //他色なら
+              this.board[y][x+i] = this.turn;       //自色にする
+              this.displayBoard(x+i,y);             //描写する
+            } else  {
+              break;
+            }
+          }
+        }else console.log('r置けない2');
       }
-      console.log(`right:[${right}]`);
+      // console.log(this.board);
 
-       // 8line left
-      for(let i=1; x-i>=0; i++) {
-        if(this.board[y][x-i] == 1) {
-          // console.log(`1がある x: ${x-i}, y: ${y}`);
-          left.push(1);
-        } else if(this.board[y][x-i] == 2) {
-          // console.log(`2がある x: ${x-i}, y: ${y}`);
-          left.push(2);
-        } else {
-          // console.log(`0がある x: ${x-i}, y: ${y}`);
-          left.push(0);
+      //  // 8line left
+      if(x == 0){
+      }else if(this.board[y][x-1] == 0 || this.board[y][x-1] == this.turn) { 
+        //1つ左が0,自色なら,何もしないでいい
+        console.log('L置けない1');
+      }else{  //他色の場合、置けるか判定したい
+        for(let i=1; x-i>=0; i++) { //判定用配列に1,2 or 5 or 0をいれる
+          if(this.board[y][x-i] == 0){
+            break;
+          }else
+          if(this.board[y][x-i] == this.turn) {
+            left.push(this.turn);
+          } else if(this.board[y][x-i] !== this.turn) {
+            left.push(5);
+          } 
         }
+        console.log(`L:[${left}]`);
+        if(left.some(s => s==this.turn)){ //1つ下が他色かつ、
+          console.log('L置ける');
+          okeru = 1;    //判定用配列のどこかに自色ありの場合は
+          for(let i=1; x-i>=0; i++) {
+            if(this.board[y][x-i] !== this.turn) {  //他色なら
+              this.board[y][x-i] = this.turn;       //自色にする
+              this.displayBoard(x-i,y);             //描写する
+            } else  {
+              break;
+            }
+          }
+        }else console.log('L置けない2');
       }
-      console.log(`left:[${left}]`);
+      // console.log(this.board);
+
+
+
+      // for(let i=1; x-i>=0; i++) {
+      //   if(this.board[y][x-i] == 1) {
+      //     // console.log(`1がある x: ${x-i}, y: ${y}`);
+      //     left.push(1);
+      //   } else if(this.board[y][x-i] == 2) {
+      //     // console.log(`2がある x: ${x-i}, y: ${y}`);
+      //     left.push(2);
+      //   } else {
+      //     // console.log(`0がある x: ${x-i}, y: ${y}`);
+      //     left.push(0);
+      //   }
+      // }
+      // console.log(`left:[${left}]`);
 
       // 8line rd
-      for(let i=1; y+i<8; i++) {
-        if(this.board[y+i][x+i] == 1) {
-          rd.push(1);
-        } else if(this.board[y+i][x+i] == 2) {
-          rd.push(2);
-        } else {
-          rd.push(0);
+      if(x == 7 || y == 7){
+      }else if(this.board[y+1][x+1] == 0 || this.board[y+1][x+1] == this.turn) { 
+        //1つ下が0,自色なら,何もしないでいい
+        console.log('rd置けない1');
+      }else{  //他色の場合、置けるか判定したい
+        for(let i=1; y+i<8 && x+i<8; i++) { //判定用配列に1,2 or 5 or 0をいれる
+          if(this.board[y+i][x+i] == 0){
+            break;
+          }else
+          if(this.board[y+i][x+i] == this.turn) {
+            rd.push(this.turn);
+          } else if(this.board[y+i][x+i] !== this.turn) {
+            rd.push(5);
+          } 
         }
+        console.log(`rd:[${rd}]`);
+        if(rd.some(s => s==this.turn)){ //1つ下が他色かつ、
+          console.log('rd置ける');
+          okeru = 1;    //判定用配列のどこかに自色ありの場合は
+          for(let i=1; y+i<8 && x+i<8; i++) {
+            if(this.board[y+i][x+i] !== this.turn) {  //他色なら
+              this.board[y+i][x+i] = this.turn;       //自色にする
+              this.displayBoard(x+i,y+i);             //描写する
+            } else  {
+              break;
+            }
+          }
+        }else console.log('rd置けない2');
       }
-      console.log(`rd:[${rd}]`);
+      // console.log(this.board);
 
         // 8line ru
-      for(let i=1; y-i>=0; i++) {
-        if(this.board[y-i][x+i] == 1) {
-          ru.push(1);
-        } else if(this.board[y-i][x+i] == 2) {
-          ru.push(2);
-        } else {
-          ru.push(0);
+      if(x == 7 || y == 0){
+      }else if(this.board[y-1][x+1] == 0 || this.board[y-1][x+1] == this.turn) { 
+        //1つ下が0,自色なら,何もしないでいい
+        console.log('ru置けない1');
+      }else{  //他色の場合、置けるか判定したい
+        for(let i=1; y-i>=0 && x+i<8; i++) { //判定用配列に1,2 or 5 or 0をいれる
+          if(this.board[y-i][x+i] == 0){
+            break;
+          }else
+          if(this.board[y-i][x+i] == this.turn) {
+            ru.push(this.turn);
+          } else if(this.board[y-i][x+i] !== this.turn) {
+            ru.push(5);
+          } 
         }
+        console.log(`ru:[${ru}]`);
+        if(ru.some(s => s==this.turn)){ //1つ下が他色かつ、
+          console.log('ru置ける');
+          okeru = 1;    //判定用配列のどこかに自色ありの場合は
+          for(let i=1; y-i>=0 && x+i<8; i++) {
+            if(this.board[y-i][x+i] !== this.turn) {  //他色なら
+              this.board[y-i][x+i] = this.turn;       //自色にする
+              this.displayBoard(x+i,y-i);             //描写する
+            } else  {
+              break;
+            }
+          }
+        }else console.log('ru置けない2');
       }
-      console.log(`ru:[${ru}]`);
 
       // 8line ld
-      for(let i=1; y+i<8; i++) {
-        if(this.board[y+i][x-i] == 1) {
-          ld.push(1);
-        } else if(this.board[y+i][x-i] == 2) {
-          ld.push(2);
-        } else {
-          ld.push(0);
+      if(x == 0 || y == 7){
+      }else if(this.board[y+1][x-1] == 0 || this.board[y+1][x-1] == this.turn) { 
+        //1つ下が0,自色なら,何もしないでいい
+        console.log('ld置けない1');
+      }else{  //他色の場合、置けるか判定したい
+        for(let i=1; y+i<8 && x-i>=0; i++) { //判定用配列に1,2 or 5 or 0をいれる
+          if(this.board[y+i][x-i] == 0){
+            break;
+          }else
+          if(this.board[y+i][x-i] == this.turn) {
+            ld.push(this.turn);
+          } else if(this.board[y+i][x-i] !== this.turn) {
+            ld.push(5);
+          } 
         }
-      }
-      console.log(`ld:[${ld}]`);
-
-        // 8line lu
-        for(let i=1; y-i>=0; i++) {
-          if(this.board[y-i][x-i] == 1) {
-            lu.push(1);
-          } else if(this.board[y-i][x-i] == 2) {
-            lu.push(2);
-          } else {
-            lu.push(0);
+        console.log(`ld:[${ld}]`);
+        if(ld.some(s => s==this.turn)){ //1つ下が他色かつ、
+          console.log('ld置ける');
+          okeru = 1;    //判定用配列のどこかに自色ありの場合は
+          for(let i=1; y+i<8 && x-i>=0; i++) {
+            if(this.board[y+i][x-i] !== this.turn) {  //他色なら
+              this.board[y+i][x-i] = this.turn;       //自色にする
+              this.displayBoard(x-i,y+i);             //描写する
+            } else  {
+              break;
+            }
           }
+        }else console.log('ld置けない2');
+      }
+      // for(let i=1; y+i<8; i++) {
+      //   if(this.board[y+i][x-i] == 1) {
+      //     ld.push(1);
+      //   } else if(this.board[y+i][x-i] == 2) {
+      //     ld.push(2);
+      //   } else {
+      //     ld.push(0);
+      //   }
+      // }
+      // console.log(`ld:[${ld}]`);
+
+      //luがなんかエラー出ます//////////////////////////////
+        // 8line lu
+        // console.log(lu);
+        if(x == 0 || y == 0){
+        }else if(this.board[y-1][x-1] == 0 || this.board[y-1][x-1] == this.turn) { 
+          //1つ左上が0,自色なら,何もしないでいい
+          console.log('Lu置けない1');
+        }else{  //他色の場合、置けるか判定したい
+          for(let i=1; x-i>=0 && y-i>=0; i++) { //判定用配列に1,2 or 5 or 0をいれる
+            if(this.board[y-i][x-i] == 0){
+              break;
+            }else
+            if(this.board[y-i][x-i] == this.turn) {
+              lu.push(this.turn);
+            } else if(this.board[y-i][x-i] !== this.turn) {
+              lu.push(5);
+            } 
+          }
+          console.log(`Lu:[${lu}]`);
+          if(lu.some(s => s==this.turn)){ //1つ下が他色かつ、
+            console.log('Lu置ける');
+            okeru = 1;    //判定用配列のどこかに自色ありの場合は
+            for(let i=1; x-i>=0 && y-i>=0; i++) {
+              if(this.board[y-i][x-i] !== this.turn) {  //他色なら
+                this.board[y-i][x-i] = this.turn;       //自色にする
+                this.displayBoard(x-i,y-i);             //描写する
+              } else  {
+                break;
+              }
+            }
+          }else console.log('Lu置けない2');
         }
-        console.log(`lu:[${lu}]`);
-  }
-}
+
+        // クリックしたとこに置く
+        if(okeru == 1){
+          this.board[y][x] = this.turn;
+          this.displayBoard(x,y);  
+          this.toggleTurn();
+          console.log(`次は${this.turn}の番です`);
+        }else{
+          console.log(`そこには置けません`);
+          console.log(`次は${this.turn}の番です`);
+        }
+  } //  highLightCanSetBox(index) -------
+} //class Board ------
+
 
 const boardBox = document.querySelectorAll('.box');
 const board = new Board();
@@ -203,7 +383,14 @@ function main() {
   board.displayBoard(3, 4);
   board.displayBoard(4, 3);
   board.displayBoard(4, 4);
-  board.displayBoard(4, 5);
-  board.displayBoard(4, 6);
-  board.displayBoard(4, 7);
+  console.log(`1の番です`);
+  // board.displayBoard(4, 5);
+  // board.displayBoard(4, 6);
+  // board.displayBoard(4, 7);
+}
+
+function pass(){
+  board.toggleTurn();
+  // this.turn == 1 ? this.turn = 2 : this.turn = 1;
+  console.log(`次は${board.turn}の番です`);
 }
