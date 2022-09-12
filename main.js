@@ -1,3 +1,8 @@
+// x-1,y-1: x,y-1: x+1,y-1
+// x-1,y  : x,y  : x+1,y
+// x-1,y+1: x,y+1: x+1,y+1
+//これを配列にしてしまう１をiにしてforで回せばええんちゃう！
+
 let down = [];
 let up = [];
 let right = [];
@@ -7,6 +12,8 @@ let ru = [];
 let ld = [];
 let lu = [];
 let okeru = 0;
+let color;
+let color2;
 
 class Board {
 
@@ -25,7 +32,11 @@ class Board {
   }
 
   displayBoard(x, y) {
+    this.turn==1 ? color='white' : color='black';
+    this.turn==1 ? color2='black' : color2='white';
     boardBox[(8 * y) + x].innerHTML = this.board[y][x];
+    boardBox[(8 * y) + x].classList.remove(`${color2}`);
+    boardBox[(8 * y) + x].classList.add(`${color}`);
   }
   toggleTurn() {
     this.turn == 1 ? this.turn = 2 : this.turn = 1;
@@ -380,9 +391,13 @@ boardBox.forEach((box, index) => {  //与えられた関数を、配列の各要
 
 function main() {
   board.displayBoard(3, 3);
-  board.displayBoard(3, 4);
+  board.toggleTurn();
   board.displayBoard(4, 3);
+  board.toggleTurn();
   board.displayBoard(4, 4);
+  board.toggleTurn();
+  board.displayBoard(3, 4);
+  board.toggleTurn();
   console.log(`1の番です`);
   // board.displayBoard(4, 5);
   // board.displayBoard(4, 6);
@@ -393,4 +408,18 @@ function pass(){
   board.toggleTurn();
   // this.turn == 1 ? this.turn = 2 : this.turn = 1;
   console.log(`次は${board.turn}の番です`);
+}
+function result(){
+  let result_white = document.querySelectorAll('.white');
+  let result_black = document.querySelectorAll('.black');
+  // console.log(result_white);
+  console.log(`白:${result_white.length}`);
+  console.log(`黒:${result_black.length}`);
+  if(result_white.length == result_black.length){
+    console.log(`引き分け`);
+  }else if(result_white.length > result_black.length){
+    console.log(`白の勝ち`);
+  }else if(result_white.length < result_black.length){
+    console.log(`黒の勝ち`);
+  }
 }

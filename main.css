@@ -14,8 +14,28 @@
   font-size: 10px;
   text-align: center;
   line-height: 50px;
+  /* align-items: center; */
+  overflow: hidden;
 }
 
 .yellow {
   background-color: rgb(120, 150, 0);
+}
+.white::before{
+  content: '';
+  background-color: rgb(199, 199, 199);
+  display: block;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  margin: 2px auto;
+}
+.black::before{
+  content: '';
+  background-color: rgb(72, 72, 72);
+  display: block;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  margin: 2px auto;
 }
