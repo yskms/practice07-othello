@@ -88,17 +88,37 @@ class Board {
       if(down.some(s => s==this.turn)){ //1つ下が他色かつ、
         console.log('d置ける');
         okeru = 1;    //判定用配列のどこかに自色ありの場合は
+
+        const promise = [];
+
         for(let i=1; y+i<8; i++) {
           if(this.board[y+i][x] !== this.turn) {  //他色なら
             this.board[y+i][x] = this.turn;       //自色にする
-            this.displayBoard(x,y+i);             //描写する
+
+            promise[i-1] = new Promise((resolve, reject) => {
+              setTimeout(() => {
+                this.displayBoard(x,y+i);
+                resolve(`${i}回目のプロミスが終了`);
+              }, 1000*i)
+            })
+
+            // setTimeout(()=>{
+            //   this.displayBoard(x,y+i);
+            //   console.log('押せない');
+            // },500*i);    //描写する
+            
           } else  {
             break;
           }
         }
+        Promise.all(promise)
+          .then((msg) => {
+          console.log(msg)
+        });
       }else console.log('d置けない2');
     }
-    
+
+   
     // console.log(this.board);
   
 
@@ -370,8 +390,10 @@ class Board {
         if(okeru == 1){
           this.board[y][x] = this.turn;
           this.displayBoard(x,y);  
-          this.toggleTurn();
-          console.log(`次は${this.turn}の番です`);
+          setTimeout(()=>{
+            this.toggleTurn();
+            console.log(`次は${this.turn}の番です`);
+          },5000);
         }else{
           console.log(`そこには置けません`);
           console.log(`次は${this.turn}の番です`);
@@ -382,6 +404,10 @@ class Board {
 
 const boardBox = document.querySelectorAll('.box');
 const board = new Board();
+
+start.addEventListener('click', e => {
+  start.classList.add('hide');
+})
 
 boardBox.forEach((box, index) => {  //与えられた関数を、配列の各要素に対して一度ずつ実行します。
   box.addEventListener('click', e => {  //ターゲットに特定のイベントが配信されるたびに呼び出される関数を設定します。

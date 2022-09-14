@@ -1,9 +1,27 @@
 @charset "UTF-8";
-
+body{
+  background-color: rgb(204, 204, 204);
+}
+.container{
+  width:500px ;
+  margin: 10px auto;
+  position: relative;
+}
+#start{
+  position: absolute;
+  top: 160px;
+  left: 190px;
+  padding: 30px;
+  /* border-radius: 5px; */
+}
+.hide{
+  display: none;
+}
 .mainBoard {
   display: flex;
   width: 400px;
   flex-wrap: wrap;
+  margin: 0 auto;
 }
 
 .box {
@@ -23,12 +41,13 @@
 }
 .white::before{
   content: '';
-  background-color: rgb(199, 199, 199);
+  background-color: rgb(242, 242, 242);
   display: block;
   border-radius: 50%;
   height: 45px;
   width: 45px;
   margin: 2px auto;
+  transition: 0.5s;
 }
 .black::before{
   content: '';
@@ -38,4 +57,5 @@
   height: 45px;
   width: 45px;
   margin: 2px auto;
+  transition: 0.5s;
 }

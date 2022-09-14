@@ -8,7 +8,11 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <button onclick="main()">スタート</button>
+  <!-- <div class="container"> -->
+    <!-- <button onclick="main()" id="start">スタート</button> -->
+  <!-- </div> -->
+  <div class="container">
+    <button onclick="main()" id="start">スタート</button>
   <div class="mainBoard">
     <div class="box"></div>
     <div class="box"></div>
@@ -75,8 +79,14 @@
     <div class="box"></div>
     <div class="box"></div>
   </div>
-  <button onclick="pass()">パス</button>
-  <button onclick="result()">集計</button>
+  </div>
+  <div class="container">
+    <p>どっちかの番ですよ</p>
+  </div>
+  <div class="container">
+    <button onclick="pass()">パス</button>
+    <button onclick="result()">集計</button>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>
