@@ -43,59 +43,15 @@ class Board {
     // console.log(`次は${this.turn}の番です`);
   }
 
-  cansetall(){
-    for(let k=0; k<64; k++){
-      const a = k % 8;
-      const b = Math.floor(k / 8);
-      const kosuu = [];//番の端っこまでの個数
-        kosuu.push(b);//上
-        kosuu.push(7-a < b   ? 7-a : b);//右上
-        kosuu.push(7-a);//右
-        kosuu.push(7-a < 7-b ? 7-a : 7-b);//右下
-        kosuu.push(7-b);//下
-        kosuu.push(a   < 7-b ? a   : 7-b);//左下
-        kosuu.push(a);//左
-        kosuu.push(a   < b   ? a   : b);//左上
-      const hantei = [[],[],[],[],[],[],[],[]];
-      // console.log(hantei);
-      boardBox[(8 * b) + a].classList.remove(`yellow`);
-
-      for(let i=0; i<8; i++){//まずi=0にして
-        for(let j=1; j<=kosuu[i]; j++){
-        const hensuu = [
-          [a,b-j],
-          [a+j,b-j],
-          [a+j,b],
-          [a+j,b+j],
-          [a,b+j],
-          [a-j,b+j],
-          [a-j,b],
-          [a-j,b-j],
-        ]
-        // console.log(kosuu[i])
-        if(kosuu[i]==0){
-        }else
-        if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){
-          break;
-        } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
-          hantei[i].push(this.turn);
-        } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
-          hantei[i].push(5);
-        }}
-      }
-
-      // console.log(hantei);
-  
-      for(let i = 0; i<8; i++){
-      if(hantei[i][0]!==this.turn && hantei[i].some(s => s==this.turn)){
-        // if(this.board[b][a]==0)
-        // console.log(`${i}置ける`);
-        boardBox[(8 * b) + a].classList.add(`yellow`);
-        break;
-      }
-      }
-    }
-  }
+  // let down = [];
+  // let up = [];
+  // let right = [];
+  // let left = [];
+  // let rd = [];
+  // let ru = [];
+  // let ld = [];
+  // let lu = [];
+  // let okeru = 0;
 
   highLightCanSetBox(index) { //8方向を調べれる
     const x = index % 8;
@@ -114,15 +70,15 @@ class Board {
     // console.log(`lu${lu}`);
 
 
-    // const kosuu = [];//番の端っこまでの個数
-    // kosuu.push(y);//上
-    // kosuu.push(7-x < y   ? 7-x : y);//右上
-    // kosuu.push(7-x);//右
-    // kosuu.push(7-x < 7-y ? 7-x : 7-y);//右下
-    // kosuu.push(7-y);//下
-    // kosuu.push(x   < 7-y ? x   : 7-y);//左下
-    // kosuu.push(x);//左
-    // kosuu.push(x   < y   ? x   : y);//左上
+    const kosuu = [];//番の端っこまでの個数
+    kosuu.push(y);//上
+    kosuu.push(7-x < y   ? 7-x : y);//右上
+    kosuu.push(7-x);//右
+    kosuu.push(7-x < 7-y ? 7-x : 7-y);//右下
+    kosuu.push(7-y);//下
+    kosuu.push(x   < 7-y ? x   : 7-y);//左下
+    kosuu.push(x);//左
+    kosuu.push(x   < y   ? x   : y);//左上
     // console.log(kosuu);
 
     //こっちの方が断然スマートですが、、、
@@ -139,45 +95,45 @@ class Board {
 
     const hantei = [[],[],[],[],[],[],[],[]];
     //いったん配列を取ってみようか。
-    // for(let i=0; i<8; i++){//まずi=0にして
-    //   for(let j=1; j<=kosuu[i]; j++){
-    //     // for(let j=1; j<=8; j++){ //なんかエラーが出たから上に戻します。
-    //   // console.log(j);
-    //   // if(this.board[ y + j*(hensuu[i][1])] [ x + j*(hensuu[i][0])] == 0){
-    //   //   break;
-    //   // } else if(this.board[y+j*(hensuu[i][1])][x+j*(hensuu[i][0])] == this.turn){
-    //   //   hantei[i].push(this.turn);
-    //   // } else if(this.board[y+j*(hensuu[i][1])][x+j*(hensuu[i][0])] !== this.turn){
-    //   //   hantei[i].push(5);
-    //   const hensuu = [
-    //     [x,y-j],
-    //     [x+j,y-j],
-    //     [x+j,y],
-    //     [x+j,y+j],
-    //     [x,y+j],
-    //     [x-j,y+j],
-    //     [x-j,y],
-    //     [x-j,y-j],
-    //   ]
-    //   console.log(kosuu[i])
-    //   if(kosuu[i]==0){
-    //   }else
-    //   if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){
-    //     break;
-    //   } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
-    //     hantei[i].push(this.turn);
-    //   } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
-    //     hantei[i].push(5);
-    //   }}
-    // }
-    // console.log(hantei);
+    for(let i=0; i<8; i++){//まずi=0にして
+      for(let j=1; j<=kosuu[i]; j++){
+        // for(let j=1; j<=8; j++){ //なんかエラーが出たから上に戻します。
+      // console.log(j);
+      // if(this.board[ y + j*(hensuu[i][1])] [ x + j*(hensuu[i][0])] == 0){
+      //   break;
+      // } else if(this.board[y+j*(hensuu[i][1])][x+j*(hensuu[i][0])] == this.turn){
+      //   hantei[i].push(this.turn);
+      // } else if(this.board[y+j*(hensuu[i][1])][x+j*(hensuu[i][0])] !== this.turn){
+      //   hantei[i].push(5);
+      const hensuu = [
+        [x,y-j],
+        [x+j,y-j],
+        [x+j,y],
+        [x+j,y+j],
+        [x,y+j],
+        [x-j,y+j],
+        [x-j,y],
+        [x-j,y-j],
+      ]
+      console.log(kosuu[i])
+      if(kosuu[i]==0){
+      }else
+      if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){
+        break;
+      } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
+        hantei[i].push(this.turn);
+      } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
+        hantei[i].push(5);
+      }}
+    }
+    console.log(hantei);
 
-    // for(let i = 0; i<8; i++){
-    // if(hantei[i][0]!==this.turn && hantei[i].some(s => s==this.turn)){
-    //   console.log(`${i}置ける`)
-
-    // }
-    // }
+    for(let i = 0; i<8; i++){
+    if(hantei[i][0]!==this.turn && hantei[i].some(s => s==this.turn)){
+      console.log(`${i}置ける`)
+      
+    }
+    }
 
     // 8line down
     if( y == 7){
@@ -502,7 +458,6 @@ class Board {
           this.displayBoard(x,y);  
           setTimeout(()=>{
             this.toggleTurn();
-            this.cansetall();
             console.log(`次は${this.turn}の番です`);
           },1000);
         }else{
