@@ -34,10 +34,12 @@ body{
   line-height: 50px;
   /* align-items: center; */
   overflow: hidden;
+  /* transition: 0.5s; */
 }
 
 .yellow {
   background-color: rgb(120, 150, 0);
+  transition: 0.5s;
 }
 .white::before{
   content: '';

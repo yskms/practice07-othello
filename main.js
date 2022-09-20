@@ -47,7 +47,7 @@ class Board {
     for(let k=0; k<64; k++){
       const a = k % 8;
       const b = Math.floor(k / 8);
-      const kosuu = [];//番の端っこまでの個数
+      const kosuu = [];//盤の端っこまでの個数
         kosuu.push(b);//上
         kosuu.push(7-a < b   ? 7-a : b);//右上
         kosuu.push(7-a);//右
@@ -60,9 +60,9 @@ class Board {
       // console.log(hantei);
       boardBox[(8 * b) + a].classList.remove(`yellow`);
 
-      for(let i=0; i<8; i++){//まずi=0にして
-        for(let j=1; j<=kosuu[i]; j++){
-        const hensuu = [
+      for(let i=0; i<8; i++){           //まずi=0で固定して
+        for(let j=1; j<=kosuu[i]; j++){ //置ける個数分、for文を回す
+        const hensuu = [      //
           [a,b-j],
           [a+j,b-j],
           [a+j,b],
@@ -72,19 +72,19 @@ class Board {
           [a-j,b],
           [a-j,b-j],
         ]
-        // console.log(kosuu[i])
-        if(kosuu[i]==0){
-        }else
-        if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){
+        // console.log(kosuu[i])      //置ける個数が0orその場所が0以外なら何もしない
+        if(kosuu[i]==0 || this.board[b][a] !== 0){  //
+        }else 
+        if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){//一つ先が0なら終わり
           break;
         } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
-          hantei[i].push(this.turn);
+          hantei[i].push(this.turn);  //一つ先が自色なら1or2
         } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
-          hantei[i].push(5);
+          hantei[i].push(5);          //自色以外なら５
         }}
       }
-
-      // console.log(hantei);
+      console.log(k);
+      console.log(hantei);
   
       for(let i = 0; i<8; i++){
       if(hantei[i][0]!==this.turn && hantei[i].some(s => s==this.turn)){
@@ -209,7 +209,7 @@ class Board {
               setTimeout(() => {
                 this.displayBoard(x,y+i);
                 resolve(`${i}回目のプロミスが終了`);
-              }, 1000*i)
+              }, 300*i)
             })
 
             // setTimeout(()=>{
@@ -535,6 +535,7 @@ function main() {
   board.toggleTurn();
   board.displayBoard(3, 4);
   board.toggleTurn();
+  board.cansetall();
   console.log(`1の番です`);
   // board.displayBoard(4, 5);
   // board.displayBoard(4, 6);
