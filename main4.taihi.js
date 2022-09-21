@@ -60,65 +60,29 @@ class Board {
       // console.log(hantei);
       boardBox[(8 * b) + a].classList.remove(`yellow`);
 
-      //---------------------------------------------- 
-      // for(let i=0; i<8; i++){           //まずi=0で固定して
-      //   for(let j=1; j<=kosuu[i]; j++){ //置ける個数分、for文を回す
-      //   const hensuu = [      //
-      //     [a,b-j],
-      //     [a+j,b-j],
-      //     [a+j,b],
-      //     [a+j,b+j],
-      //     [a,b+j],
-      //     [a-j,b+j],
-      //     [a-j,b],
-      //     [a-j,b-j],
-      //   ]
-      //   console.log(`i:${i}`);
-      //   console.log(`j:${j}`);
-      //   console.log(kosuu[i])      //置ける個数が0orその場所が0以外なら何もしない
-      //   if(kosuu[i]==0 || this.board[b][a] !== 0){  //
-      //   }else 
-      //   if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){//一つ先が0なら終わり
-      //     break;
-      //   } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
-      //     hantei[i].push(this.turn);  //一つ先が自色なら1or2
-      //   } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
-      //     hantei[i].push(5);          //自色以外なら５
-      //   }}
-      // }
-      //----------------------------------------------
       for(let i=0; i<8; i++){           //まずi=0で固定して
+        for(let j=1; j<=kosuu[i]; j++){ //置ける個数分、for文を回す
         const hensuu = [      //
-          [0,0-1],
-          [0+1,0-1],
-          [0+1,0],
-          [0+1,0+1],
-          [0,0+1],
-          [0-1,0+1],
-          [0-1,0],
-          [0-1,0-1],
+          [a,b-j],
+          [a+j,b-j],
+          [a+j,b],
+          [a+j,b+j],
+          [a,b+j],
+          [a-j,b+j],
+          [a-j,b],
+          [a-j,b-j],
         ]
-        for(let j=1; ((0<(b+j*(hensuu[i][1])))&&((b+j*(hensuu[i][1])<8))&&(0<(a+j*(hensuu[i][0])))&&((a+j*(hensuu[i][0])<8))); j++){ //置ける個数分、for文を回す
-        
-        console.log(`i:${i}`);
-        console.log(`j:${j}`);
-        console.log(`${0<j<=kosuu[i]}`);
-        console.log(`${(hensuu[i][1])}`);
-        console.log(`${j*(hensuu[i][1])}`);
-        console.log(`${b+j*(hensuu[i][1])}`);
-        console.log(`${a+j*(hensuu[i][0])}`);
-        console.log(kosuu[i])      //置ける個数が0orその場所が0以外なら何もしない
+        // console.log(kosuu[i])      //置ける個数が0orその場所が0以外なら何もしない
         if(kosuu[i]==0 || this.board[b][a] !== 0){  //
         }else 
-        if(this.board[b+j*(hensuu[i][1])][a+j*(hensuu[i][0])] == 0){//一つ先が0なら終わり
+        if(this.board[(hensuu[i][1])][(hensuu[i][0])] == 0){//一つ先が0なら終わり
           break;
-        } else if(this.board[b+j*(hensuu[i][1])][a+j*(hensuu[i][0])] == this.turn){
+        } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] == this.turn){
           hantei[i].push(this.turn);  //一つ先が自色なら1or2
-        } else if(this.board[b+j*(hensuu[i][1])][a+j*(hensuu[i][0])] !== this.turn){
+        } else if(this.board[(hensuu[i][1])][(hensuu[i][0])] !== this.turn){
           hantei[i].push(5);          //自色以外なら５
         }}
       }
-      //----------------------------------------------
       console.log(k);
       console.log(hantei);
   
