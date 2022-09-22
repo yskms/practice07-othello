@@ -80,11 +80,12 @@ class Board {
       console.log(hantei);
       return(hantei);
     }
-  add_yellow(hairetuhairetu,k){
+  add_yellow(hairetuhairetu,k){ //2重配列と63までの数字をもらって使う、黄色付け関数
       const a = k % 8;
       const b = Math.floor(k / 8);
       for(let i = 0; i<8; i++){
       if(hairetuhairetu[i][0]!==this.turn && hairetuhairetu[i].some(s => s==this.turn)){
+        //８方向について、先頭が自色でないかつ、配列内に自色があるなら
         // if(this.board[b][a]==0)
         // console.log(`${i}置ける`);
         boardBox[(8 * b) + a].classList.add(`yellow`);
@@ -94,8 +95,8 @@ class Board {
     }
   cansetall2(){
     for(let k=0; k<64; k++){
-      const c = this.canset(k);
-      this.add_yellow(c,k);
+      const c = this.canset(k); //出力される2重配列をcに入れる
+      this.add_yellow(c,k);     //その２重配列とkで黄色付け関数を発動する。64回。
     }
   }
 
