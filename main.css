@@ -38,9 +38,9 @@ body{
 }
 
 .yellow {
-  background-color: rgb(120, 150, 0);
+  background-color: rgba(120, 150, 0, 0.623);
   /* transition: 0.5s; */
-  animation: flash 1s linear infinite;
+  /* animation: flash 1s linear infinite; */
 }
 @keyframes flash{
   0%,100%{opacity: 1;}
@@ -67,4 +67,10 @@ body{
   width: 45px;
   margin: 2px auto;
   transition: 0.5s;
+}
+#teban{
+  text-align: center;
+  transition: 1s;
+  transform-style: preserve-3d;
+  transform: rotateY(180deg);
 }

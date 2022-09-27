@@ -14,7 +14,16 @@ let lu = [];
 let okeru = 0;
 let color;
 let color2;
-
+const hensuu = [
+  [0,0-1],
+  [0+1,0-1],
+  [0+1,0],
+  [0+1,0+1],
+  [0,0+1],
+  [0-1,0+1],
+  [0-1,0],
+  [0-1,0-1],
+];
 class Board {
 
   constructor() {
@@ -43,6 +52,17 @@ class Board {
     // console.log(`次は${this.turn}の番です`);
   }
 
+  // const hensuu = [
+  //         [0,0-1],
+  //         [0+1,0-1],
+  //         [0+1,0],
+  //         [0+1,0+1],
+  //         [0,0+1],
+  //         [0-1,0+1],
+  //         [0-1,0],
+  //         [0-1,0-1],
+  //       ];
+
   canset(k){//hantei配列をだす関数
       const a = k % 8;
       const b = Math.floor(k / 8);
@@ -50,16 +70,16 @@ class Board {
       boardBox[(8 * b) + a].classList.remove(`yellow`);
 
       for(let i=0; i<8; i++){           //まずi=0で固定して
-        const hensuu = [      //
-          [0,0-1],
-          [0+1,0-1],
-          [0+1,0],
-          [0+1,0+1],
-          [0,0+1],
-          [0-1,0+1],
-          [0-1,0],
-          [0-1,0-1],
-        ]
+        // const hensuu = [      //
+        //   [0,0-1],
+        //   [0+1,0-1],
+        //   [0+1,0],
+        //   [0+1,0+1],
+        //   [0,0+1],
+        //   [0-1,0+1],
+        //   [0-1,0],
+        //   [0-1,0-1],
+        // ]
         for(let j=1; ((0<=(b+j*(hensuu[i][1])))&&((b+j*(hensuu[i][1])<8))&&(0<=(a+j*(hensuu[i][0])))&&((a+j*(hensuu[i][0])<8))); j++){
         //-1か8じゃないなら、for文を回す
         
@@ -76,8 +96,8 @@ class Board {
           }
         }
       }
-      console.log(k);
-      console.log(hantei);
+      // console.log(k);
+      // console.log(hantei);
       return(hantei);
     }
   add_yellow(hairetuhairetu,k){ //2重配列と63までの数字をもらって使う、黄色付け関数
@@ -98,6 +118,51 @@ class Board {
       const c = this.canset(k); //出力される2重配列をcに入れる
       this.add_yellow(c,k);     //その２重配列とkで黄色付け関数を発動する。64回。
     }
+  }
+  kaesu(hairetuhairetu,k){
+    const a = k % 8;
+    const b = Math.floor(k / 8);
+    let okeru = 0;
+    for(let i =0; i<8; i++){
+    if(hairetuhairetu[i][0]!==this.turn && hairetuhairetu[i].some(s => s==this.turn)){
+      //８方向について、先頭が自色でないかつ、配列内に自色があるなら
+      okeru = 1;
+      //ex.[5,5,2,5,2]
+      for(let j =0; j<hairetuhairetu[i].length; j++){
+        if(hairetuhairetu[i][j]!==this.turn){//配列のj番目が他色なら
+          console.log(this.board[b+(j+1)*(hensuu[i][1])][a+(j+1)*(hensuu[i][0])]);
+          console.log(this.turn);
+          this.board[b+(j+1)*(hensuu[i][1])][a+(j+1)*(hensuu[i][0])]=this.turn;
+          console.log(this.board[b+(j+1)*(hensuu[i][1])][a+(j+1)*(hensuu[i][0])]);
+          console.log(this.turn);
+          //i方向に一つ先を自色にする
+          // console.log(this.board[b+(j+1)*(hensuu[i][1])][a+(j+1)*(hensuu[i][0])]);
+          console.log(a+(j+1)*(hensuu[i][0]),b+(j+1)*(hensuu[i][1]));
+          this.displayBoard(a+(j+1)*(hensuu[i][0]),b+(j+1)*(hensuu[i][1]));
+          //それを描写する
+          console.log(this.board);
+        }else {
+          break;  //自色なら終わらせて次の方向へ。
+        }
+      }
+    }
+    }
+    if(okeru == 1){
+      this.board[b][a]=this.turn;
+      this.displayBoard(a,b);
+      this.toggleTurn();
+      this.cansetall2();
+      console.log(`次は${this.turn}の番です`);
+      document.getElementById('teban').innerHTML=`次は${this.turn}の番です`;
+    }else{
+      console.log(`そこには置けません`);
+      console.log(`まだ${this.turn}の番です`);
+      document.getElementById('teban').innerHTML=`そこには置けません。まだ${this.turn}の番です`;
+    }
+  }
+  hikkurimain(k){
+    const c = this.canset(k);
+    this.kaesu(c,k);
   }
 
 
@@ -147,16 +212,16 @@ class Board {
       // }
       //----------------------------------------------
       for(let i=0; i<8; i++){           //まずi=0で固定して
-        const hensuu = [      //
-          [0,0-1],
-          [0+1,0-1],
-          [0+1,0],
-          [0+1,0+1],
-          [0,0+1],
-          [0-1,0+1],
-          [0-1,0],
-          [0-1,0-1],
-        ]
+        // const hensuu = [      //
+        //   [0,0-1],
+        //   [0+1,0-1],
+        //   [0+1,0],
+        //   [0+1,0+1],
+        //   [0,0+1],
+        //   [0-1,0+1],
+        //   [0-1,0],
+        //   [0-1,0-1],
+        // ]
         for(let j=1; ((0<=(b+j*(hensuu[i][1])))&&((b+j*(hensuu[i][1])<8))&&(0<=(a+j*(hensuu[i][0])))&&((a+j*(hensuu[i][0])<8))); j++){ //置ける個数分、for文を回す
         
         console.log(`i:${i}`);
@@ -602,7 +667,7 @@ class Board {
           },1000);
         }else{
           console.log(`そこには置けません`);
-          console.log(`次は${this.turn}の番です`);
+          console.log(`まだ${this.turn}の番です`);
         }
   } //  highLightCanSetBox(index) -------
 } //class Board ------
@@ -617,7 +682,8 @@ start.addEventListener('click', e => {
 
 boardBox.forEach((box, index) => {  //与えられた関数を、配列の各要素に対して一度ずつ実行します。
   box.addEventListener('click', e => {  //ターゲットに特定のイベントが配信されるたびに呼び出される関数を設定します。
-    board.highLightCanSetBox(index);
+    // board.highLightCanSetBox(index);
+    board.hikkurimain(index);
   })
 })
 
@@ -632,6 +698,7 @@ function main() {
   board.toggleTurn();
   board.cansetall2();
   console.log(`1の番です`);
+  document.getElementById('teban').innerHTML=`次は${board.turn}の番です`;
   // board.displayBoard(4, 5);
   // board.displayBoard(4, 6);
   // board.displayBoard(4, 7);
@@ -641,6 +708,7 @@ function pass(){
   board.toggleTurn();
   // this.turn == 1 ? this.turn = 2 : this.turn = 1;
   console.log(`次は${board.turn}の番です`);
+  document.getElementById('teban').innerHTML=`次は${board.turn}の番です`;
 }
 function result(){
   let result_white = document.querySelectorAll('.white');
