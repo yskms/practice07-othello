@@ -6,13 +6,14 @@ body{
   width:500px ;
   margin: 10px auto;
   position: relative;
+  text-align: center;
 }
 #start{
   position: absolute;
   top: 160px;
   left: 190px;
   padding: 30px;
-  /* border-radius: 5px; */
+  border-radius: 5px;
 }
 .hide{
   display: none;
@@ -70,7 +71,7 @@ body{
 }
 #teban{
   text-align: center;
-  transition: 1s;
-  transform-style: preserve-3d;
-  transform: rotateY(180deg);
+  /* transition: 1s; */
+  /* transform-style: preserve-3d; */
+  /* transform: rotateY(180deg); */
 }
