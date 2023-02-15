@@ -4,7 +4,7 @@ body{
 }
 .container{
   width:500px ;
-  margin: 10px auto;
+  margin: 50px auto;
   position: relative;
   text-align: center;
 }
@@ -23,6 +23,7 @@ body{
   width: 400px;
   flex-wrap: wrap;
   margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, .3);
 }
 
 .box {
