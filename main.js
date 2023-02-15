@@ -128,11 +128,19 @@ class Board {
       this.toggleTurn();
       this.cansetall2();
       console.log(`次は${this.turn}の番です`);
-      document.getElementById('teban').innerHTML=`次は${this.turn}の番です`;
+      if(this.turn===1){
+        // document.getElementById('teban').innerHTML=`次は${this.turn}の番です`;
+        document.getElementById('teban').innerHTML=`次は白の番です`;
+      }else{
+        document.getElementById('teban').innerHTML=`次は黒の番です`;}
     }else{
       console.log(`そこには置けません`);
       console.log(`まだ${this.turn}の番です`);
-      document.getElementById('teban').innerHTML=`そこには置けません。まだ${this.turn}の番です`;
+      if(this.turn===1){
+        document.getElementById('teban').innerHTML=`そこには置けません。まだ白の番です`;
+      }else{
+        document.getElementById('teban').innerHTML=`そこには置けません。まだ黒の番です`;
+      }
     }
   }
   hikkurimain(k){
@@ -509,7 +517,12 @@ function pass(){
   board.toggleTurn();
   // this.turn == 1 ? this.turn = 2 : this.turn = 1;
   console.log(`次は${board.turn}の番です`);
-  document.getElementById('teban').innerHTML=`次は${board.turn}の番です`;
+  if(board.turn===1){
+    document.getElementById('teban').innerHTML=`次は白の番です`;
+  }else{
+    document.getElementById('teban').innerHTML=`次は黒の番です`;
+  }
+  cansetall2();
 }
 function result(){
   let result_white = document.querySelectorAll('.white');
